@@ -1,0 +1,19 @@
+steps:
+  # Docker build
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-east1-docker.pkg.dev/${PROJECT_ID}/container-images/app1:latest', '.']
+
+  # Docker Push
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-east1-docker.pkg.dev/${PROJECT_ID}/container-images/app1:latest']
+
+  # Deploy to GKE for Container 1
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args: ['apply', '-f', 'k8s/app1_deployment.yaml']
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=us-east1'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=mohammed-cluster'
+      - 'CLOUDSDK_CORE_PROJECT=${PROJECT_ID}'
+
+images:
+  - 'us-east1-docker.pkg.dev/${PROJECT_ID}/container-images/app1:latest'

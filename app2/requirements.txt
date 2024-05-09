@@ -1,0 +1,4 @@
+fastapi
+Hypercorn
+pydantic
+requests

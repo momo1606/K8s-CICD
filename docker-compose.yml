@@ -1,0 +1,22 @@
+services:
+  app1:
+    image: momo16/app1
+    volumes:
+      - ./:/app/tmp
+    ports:
+      - "6000:6000"
+    networks:
+      - app-network
+ 
+  app2:
+    image: momo16/app2
+    volumes:
+      - ./:/app/tmp
+    ports:
+      - "6001:6001"
+    networks:
+      - app-network
+ 
+networks:
+  app-network:
+    driver: bridge
